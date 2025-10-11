@@ -26,7 +26,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-
 public class HomeActivity extends AppCompatActivity {
 
     // Variables
@@ -55,9 +54,18 @@ public class HomeActivity extends AppCompatActivity {
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), granted -> {
                 if (granted) {
                     alternarluz(); // si conceden permiso, intentamos prender/apagar
-
                 } else {
                     Toast.makeText(this, "Permiso de cámara denegado", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+    // Launcher para seleccionar imagen de la galería (implícito)
+    private final ActivityResultLauncher<String> seleccionarImagenLauncher =
+            registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
+                if (uri != null) {
+                    Toast.makeText(this, "Imagen seleccionada: " + uri.getLastPathSegment(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Selección cancelada", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -74,10 +82,17 @@ public class HomeActivity extends AppCompatActivity {
         tvBienvenida = findViewById(R.id.tvBienvenida);
         Button btnIrPerfil = findViewById(R.id.btnIrPerfil);
         Button btnAbrirWeb = findViewById(R.id.btnAbrirWeb);
-        Button btnEnviarCorreo = findViewById(R.id.btnEnviarCorreo);
+        Button btnEnviarCorreo = findViewById(R.id.btnEnviarCorreo); // ahora enviará SMS
         Button btnCompartir = findViewById(R.id.btnCompartir);
         btnLinterna = findViewById(R.id.btnLinterna);
         Button btnCamara = findViewById(R.id.btnCamara);
+
+        // NUEVOS botones (agrega estos IDs en tu XML si aún no existen)
+        Button btnMarcarTelefono = findViewById(R.id.btnMarcarTelefono);
+        Button btnSeleccionarImagen = findViewById(R.id.btnSeleccionarImagen);
+        Button btnAbrirConfiguracion = findViewById(R.id.btnAbrirConfiguracion);
+        Button btnVerDetalles = findViewById(R.id.btnVerDetalles);
+        Button btnAbrirAyuda = findViewById(R.id.btnAbrirAyuda);
 
         // Recibir dato del Login
         emailUsuario = getIntent().getStringExtra("email_usuario");
@@ -91,21 +106,19 @@ public class HomeActivity extends AppCompatActivity {
             editarPerfilLauncher.launch(i);
         });
 
-        // Evento: Intent implícito → abrir web
+        // Evento: Intent implícito → abrir web (Minecraft)
         btnAbrirWeb.setOnClickListener(v -> {
-            Uri uri = Uri.parse("https://www.santotomas.cl");
+            Uri uri = Uri.parse("https://www.minecraft.net/");
             Intent viewWeb = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(viewWeb);
         });
 
-        // Evento: Intent implícito → enviar correo
+        // Evento: Intent implícito → **enviar SMS** (reemplaza al correo)
         btnEnviarCorreo.setOnClickListener(v -> {
-            Intent email = new Intent(Intent.ACTION_SENDTO);
-            email.setData(Uri.parse("mailto:")); // Solo apps de correo
-            email.putExtra(Intent.EXTRA_EMAIL, new String[]{emailUsuario});
-            email.putExtra(Intent.EXTRA_SUBJECT, "Prueba desde la app");
-            email.putExtra(Intent.EXTRA_TEXT, "Hola, esto es un intento de correo.");
-            startActivity(Intent.createChooser(email, "Enviar correo con:"));
+            Uri uri = Uri.parse("smsto:"); // vacío para que elijas contacto
+            Intent sms = new Intent(Intent.ACTION_SENDTO, uri);
+            sms.putExtra("sms_body", "Hola, mensaje desde mi app.");
+            startActivity(sms);
         });
 
         // Evento: Intent implícito → compartir texto
@@ -116,9 +129,7 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(Intent.createChooser(share, "Compartir usando:"));
         });
 
-
-        //Linterna Inicializamos la camara
-
+        // ===== Linterna: Inicializamos la camara =====
         camara = (CameraManager) getSystemService(CAMERA_SERVICE);
 
         try {
@@ -157,6 +168,36 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(this, CamaraActivity.class))
         );
 
+        // ====== NUEVOS: implícitos directos ======
+
+        // Marcar teléfono (ACTION_DIAL)
+        btnMarcarTelefono.setOnClickListener(v -> {
+            Uri tel = Uri.parse("tel:+56912345678");
+            startActivity(new Intent(Intent.ACTION_DIAL, tel));
+        });
+
+        // Seleccionar imagen de la galería (GetContent)
+        btnSeleccionarImagen.setOnClickListener(v ->
+                seleccionarImagenLauncher.launch("image/*")
+        );
+
+        // ====== NUEVOS: explícitos ======
+
+        // Configuración
+        btnAbrirConfiguracion.setOnClickListener(v ->
+                startActivity(new Intent(this, ConfiguracionActivity.class)));
+
+        // Detalles (con extras de ejemplo)
+        btnVerDetalles.setOnClickListener(v -> {
+            Intent i = new Intent(this, DetallesActivity.class);
+            i.putExtra("titulo", "Detalle desde Home");
+            i.putExtra("id", 42);
+            startActivity(i);
+        });
+
+        // Ayuda
+        btnAbrirAyuda.setOnClickListener(v ->
+                startActivity(new Intent(this, AyudaActivity.class)));
     }
 
     //Linterna
@@ -170,7 +211,6 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -182,17 +222,6 @@ public class HomeActivity extends AppCompatActivity {
             } catch (CameraAccessException ignored) {}
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 
     // ===== Menú en HomeActivity =====
     @Override
@@ -211,8 +240,8 @@ public class HomeActivity extends AppCompatActivity {
             editarPerfilLauncher.launch(i);
             return true;
         } else if (id == R.id.action_web) {
-            // Abrir web (implícito)
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://developer.android.com")));
+            // Abrir web (implícito) → Minecraft
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.minecraft.net/")));
             return true;
         } else if (id == R.id.action_salir) {
             finish(); // Cierra HomeActivity
