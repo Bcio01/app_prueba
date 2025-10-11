@@ -100,6 +100,45 @@
                     android:text="Abrir Cámara"
                     android:layout_marginTop="12dp"/>
 
+
+
+                <!-- NUEVOS implícitos -->
+                <Button
+                    android:id="@+id/btnMarcarTelefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Marcar Teléfono"
+                    android:layout_marginTop="12dp" />
+
+                <Button
+                    android:id="@+id/btnSeleccionarImagen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Seleccionar Imagen (Galería)"
+                    android:layout_marginTop="8dp" />
+
+                <!-- NUEVOS explícitos -->
+                <Button
+                    android:id="@+id/btnAbrirConfiguracion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Configuración"
+                    android:layout_marginTop="16dp" />
+
+                <Button
+                    android:id="@+id/btnVerDetalles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ver Detalles"
+                    android:layout_marginTop="8dp" />
+
+                <Button
+                    android:id="@+id/btnAbrirAyuda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ayuda / FAQ"
+                    android:layout_marginTop="8dp" />
+
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
