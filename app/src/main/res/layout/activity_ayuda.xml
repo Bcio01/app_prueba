@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:padding="16dp"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:text="Ayuda / FAQ"
+        android:textStyle="bold" android:textSize="20sp"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+    <TextView
+        android:text="¿Cómo iniciar sesión?"
+        android:textStyle="bold" android:layout_marginTop="12dp"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView
+        android:text="Ingresa correo y contraseña válidos y presiona Iniciar sesión."
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+    <TextView
+        android:text="¿Cómo tomar una foto?"
+        android:textStyle="bold" android:layout_marginTop="12dp"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView
+        android:text="Ve a Cámara, concede permisos y presiona Tomar foto (puedes elegir frontal)."
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btnVolverHome"
+        android:text="Volver al inicio"
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

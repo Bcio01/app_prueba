@@ -40,6 +40,9 @@
         <activity
             android:name=".DetallesActivity"
             android:exported="false"/>
+        <activity
+            android:name=".AyudaActivity"
+            android:exported="false" />
         <!-- Permisos para acceder a archivos -->
         <provider
             android:name="androidx.core.content.FileProvider"
