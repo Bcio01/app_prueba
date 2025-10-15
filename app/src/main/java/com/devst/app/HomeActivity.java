@@ -74,6 +74,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
+        // Envia a la ubicacion del bton abrirmaps
+        findViewById(R.id.btnAbrirMaps).setOnClickListener(v ->
+                abrirMapsUbicacion(-33.4489, -70.6693, "Santiago Centro"));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -170,6 +173,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // ====== NUEVOS: implícitos directos ======
 
+
         // Marcar teléfono (ACTION_DIAL)
         btnMarcarTelefono.setOnClickListener(v -> {
             Uri tel = Uri.parse("tel:+56912345678");
@@ -210,6 +214,22 @@ public class HomeActivity extends AppCompatActivity {
             Toast.makeText(this, "Error al controlar la linterna", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void abrirMapsUbicacion(double lat, double lng, String etiqueta) {
+        Uri uri = Uri.parse("geo:" + lat + "," + lng + "?q=" + lat + "," + lng + "(" + Uri.encode(etiqueta) + ")");
+        Intent i = new Intent(Intent.ACTION_VIEW, uri);
+        i.setPackage("com.google.android.apps.maps"); // intenta usar Google Maps
+
+        if (i.resolveActivity(getPackageManager()) != null) {
+            startActivity(i);
+        } else {
+            // Fallback al navegador si no hay app de Maps
+            Uri web = Uri.parse("https://www.google.com/maps/search/?api=1&query=" + lat + "," + lng);
+            startActivity(new Intent(Intent.ACTION_VIEW, web));
+        }
+    }
+
+
 
     @Override
     protected void onPause() {
