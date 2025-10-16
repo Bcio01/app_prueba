@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Título -->
+    <!-- Título :) -->
     <TextView
         android:id="@+id/tvTitulo"
         android:layout_width="0dp"

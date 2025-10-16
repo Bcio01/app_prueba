@@ -29,7 +29,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <!-- Columna simple, centrada y con ancho máximo para que no se estire en tablets -->
+        <!-- Columna simple, centrada y con ancho máximo para que no se estire en tablets :D -->
         <LinearLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
