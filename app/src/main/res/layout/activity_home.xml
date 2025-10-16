@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Esta línea indica que es un archivo XML y que usa codificación UTF-8 (letras y símbolos estándar) -->
+
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,11 +9,25 @@
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
 
+    <!--
+        Este es el contenedor principal de la pantalla.
+        "CoordinatorLayout" coordina la barra superior y el contenido que se desplaza abajo.
+        Las tres líneas "xmlns" sirven para que Android entienda los nombres y propiedades del XML.
+        El ancho y alto "match_parent" significa que ocupa toda la pantalla.
+        tools:context indica a qué archivo Java pertenece este diseño (HomeActivity).
+    -->
+
     <!-- Barra superior con soporte para menú -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
+
+        <!--
+            AppBarLayout contiene la barra superior (toolbar).
+            wrap_content significa que su altura se ajusta al contenido.
+            fitsSystemWindows permite que se acomode correctamente con la barra de estado del celular.
+        -->
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -21,15 +37,28 @@
             android:title="Menú Principal"
             android:titleTextColor="@android:color/white"
             app:titleCentered="true"/>
+        <!--
+            MaterialToolbar es la barra superior moderna.
+            Tiene un fondo de color personalizado (brand_primary).
+            Muestra el título "Menú Principal" en color blanco.
+            app:titleCentered="true" centra el texto en la barra.
+        -->
+
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Contenido desplazable, con padding propio -->
+    <!-- Contenido desplazable, con padding propio :) -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <!-- Columna simple, centrada y con ancho máximo para que no se estire en tablets -->
+        <!--
+            NestedScrollView permite que el contenido de la pantalla se desplace (scroll).
+            Es útil cuando hay muchos botones o textos que no caben en una sola vista.
+            El comportamiento app:layout_behavior hace que se mueva junto con la barra superior.
+        -->
+
+        <!-- Columna simple, centrada y con ancho máximo para que no se estire en tablets :D -->
         <LinearLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
@@ -37,6 +66,12 @@
             android:orientation="vertical"
             android:padding="16dp"
             android:gravity="center_horizontal">
+
+            <!--
+                LinearLayout organiza los elementos en forma vertical (uno bajo otro).
+                El padding (16dp) da espacio interior a los lados.
+                gravity="center_horizontal" centra los elementos en el eje horizontal.
+            -->
 
             <!-- Contenedor para limitar el ancho en pantallas grandes -->
             <LinearLayout
@@ -47,6 +82,12 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp">
 
+                <!--
+                    Este LinearLayout adicional sirve como contenedor interno.
+                    Permite centrar y dar espacios arriba y abajo (padding).
+                    wrap_content hace que solo ocupe el espacio necesario según su contenido.
+                -->
+
                 <!-- Título -->
                 <TextView
                     android:id="@+id/tvBienvenida"
@@ -56,6 +97,12 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/text_main"/>
+                <!--
+                    Este es el texto principal que da la bienvenida al usuario.
+                    "textSize" define el tamaño de la letra.
+                    "bold" lo pone en negrita.
+                    Usa un color definido en tu archivo colors.xml.
+                -->
 
                 <!-- Botones -->
                 <Button
@@ -64,6 +111,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Ir a Perfil (resultado)"/>
+                <!--
+                    Botón que abre la pantalla de PerfilActivity.
+                    Tiene un margen superior para separarse del texto anterior.
+                -->
 
                 <Button
                     android:id="@+id/btnAbrirWeb"
@@ -71,6 +122,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="Abrir sitio web"/>
+                <!--
+                    Botón que abre la página web de Minecraft con un Intent implícito.
+                -->
 
                 <Button
                     android:id="@+id/btnEnviarCorreo"
@@ -78,6 +132,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="Enviar correo"/>
+                <!--
+                    Botón que abre la aplicación de mensajes o correo (en tu caso SMS).
+                -->
 
                 <Button
                     android:id="@+id/btnCompartir"
@@ -85,6 +142,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="Compartir texto"/>
+                <!--
+                    Botón que permite compartir texto con otras apps (WhatsApp, Gmail, etc.).
+                -->
 
                 <Button
                     android:id="@+id/btnLinterna"
@@ -92,6 +152,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="Linterna ON/OFF" />
+                <!--
+                    Botón que enciende o apaga la linterna del celular.
+                -->
 
                 <Button
                     android:id="@+id/btnCamara"
@@ -99,9 +162,68 @@
                     android:layout_height="wrap_content"
                     android:text="Abrir Cámara"
                     android:layout_marginTop="12dp"/>
+                <!--
+                    Botón que abre la cámara del teléfono (otra Activity en tu proyecto).
+                -->
+
+                <!-- NUEVOS implícitos -->
+                <Button
+                    android:id="@+id/btnMarcarTelefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Marcar Teléfono"
+                    android:layout_marginTop="12dp" />
+                <!--
+                    Botón que abre el marcador del teléfono con un número ya escrito.
+                -->
+
+                <Button
+                    android:id="@+id/btnSeleccionarImagen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Seleccionar Imagen (Galería)"
+                    android:layout_marginTop="8dp" />
+                <!--
+                    Botón que abre la galería del dispositivo para elegir una imagen.
+                -->
+
+                <!-- NUEVOS explícitos -->
+                <Button
+                    android:id="@+id/btnAbrirConfiguracion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Configuración"
+                    android:layout_marginTop="16dp" />
+                <!--
+                    Botón que abre la pantalla de Configuración (ConfiguracionActivity).
+                -->
+
+                <Button
+                    android:id="@+id/btnVerDetalles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ver Detalles"
+                    android:layout_marginTop="8dp" />
+                <!--
+                    Botón que abre la pantalla de DetallesActivity y le envía datos.
+                -->
+
+                <Button
+                    android:id="@+id/btnAbrirAyuda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ayuda / FAQ"
+                    android:layout_marginTop="8dp" />
+                <!--
+                    Botón que abre la pantalla de ayuda (AyudaActivity) o preguntas frecuentes.
+                -->
 
             </LinearLayout>
+            <!-- Fin del contenedor interno de los botones -->
         </LinearLayout>
+        <!-- Fin del contenedor principal vertical -->
     </androidx.core.widget.NestedScrollView>
+    <!-- Fin del contenido desplazable -->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <!-- Fin del diseño general de la pantalla -->
