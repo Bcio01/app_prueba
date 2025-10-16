@@ -76,7 +76,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         // Envia a la ubicacion del bton abrirmaps
         findViewById(R.id.btnAbrirMaps).setOnClickListener(v ->
-                abrirMapsUbicacion(-33.4489, -70.6693, "Santiago Centro"));
+                abrirMapsUbicacion(-33.449291, -70.662279, "Instituto ST"));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

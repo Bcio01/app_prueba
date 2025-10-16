@@ -5,150 +5,180 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/app_bg"
     tools:context=".HomeActivity">
 
-    <!-- Barra superior con soporte para menú -->
+    <!-- Barra superior -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/brand_primary"
-            android:title="Menú Principal"
-            android:titleTextColor="@android:color/white"
+            android:title="Inicio"
+            android:titleTextColor="@color/on_primary"
             app:titleCentered="true"/>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Contenido desplazable, con padding propio -->
+    <!-- Contenido principal -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:padding="24dp">
 
-        <!-- Columna simple, centrada y con ancho máximo para que no se estire en tablets -->
         <LinearLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
             android:gravity="center_horizontal">
 
-            <!-- Contenedor para limitar el ancho en pantallas grandes -->
-            <LinearLayout
+            <!-- Texto de bienvenida -->
+            <TextView
+                android:id="@+id/tvBienvenida"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bienvenido 👋"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_main"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Contenedor de botones -->
+            <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp">
+                android:columnCount="2"
+                android:alignmentMode="alignMargins"
+                android:useDefaultMargins="true"
+                android:columnOrderPreserved="false">
 
-                <!-- Título -->
-                <TextView
-                    android:id="@+id/tvBienvenida"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Bienvenido:"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_main"/>
-
-                <!-- Botones -->
+                <!-- Todos los botones con mismo estilo -->
                 <Button
                     android:id="@+id/btnIrPerfil"
-                    android:layout_width="match_parent"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Ir a Perfil (resultado)"/>
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/brand_primary"
+                    android:textColor="@color/on_primary"
+                    android:text="Perfil"/>
 
                 <Button
                     android:id="@+id/btnAbrirWeb"
-                    android:layout_width="match_parent"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="Abrir sitio web"/>
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/brand_primary"
+                    android:textColor="@color/on_primary"
+                    android:text="Sitio web"/>
 
                 <Button
                     android:id="@+id/btnEnviarCorreo"
-                    android:layout_width="match_parent"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="Enviar correo"/>
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/brand_primary"
+                    android:textColor="@color/on_primary"
+                    android:text="Correo"/>
 
                 <Button
                     android:id="@+id/btnCompartir"
-                    android:layout_width="match_parent"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="Compartir texto"/>
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/brand_primary"
+                    android:textColor="@color/on_primary"
+                    android:text="Compartir"/>
 
                 <Button
                     android:id="@+id/btnLinterna"
-                    android:layout_width="match_parent"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="Linterna ON/OFF" />
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/brand_primary"
+                    android:textColor="@color/on_primary"
+                    android:text="Linterna"/>
 
                 <Button
                     android:id="@+id/btnCamara"
-                    android:layout_width="match_parent"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Abrir Cámara"
-                    android:layout_marginTop="12dp"/>
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/brand_primary"
+                    android:textColor="@color/on_primary"
+                    android:text="Cámara"/>
 
-                <!-- NUEVOS implícitos -->
                 <Button
                     android:id="@+id/btnMarcarTelefono"
-                    android:layout_width="match_parent"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Marcar Teléfono"
-                    android:layout_marginTop="12dp" />
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/brand_primary"
+                    android:textColor="@color/on_primary"
+                    android:text="Teléfono"/>
 
                 <Button
                     android:id="@+id/btnSeleccionarImagen"
-                    android:layout_width="match_parent"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Seleccionar Imagen (Galería)"
-                    android:layout_marginTop="12dp" />
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/brand_primary"
+                    android:textColor="@color/on_primary"
+                    android:text="Galería"/>
 
-                <!-- NUEVO implicito -->
                 <Button
                     android:id="@+id/btnAbrirMaps"
-                    android:layout_width="match_parent"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Abrir en Google Maps"
-                    android:layout_marginTop="12dp" />
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/brand_primary"
+                    android:textColor="@color/on_primary"
+                    android:text="Maps"/>
 
-
-                <!-- NUEVOS explícitos -->
                 <Button
                     android:id="@+id/btnAbrirConfiguracion"
-                    android:layout_width="match_parent"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Configuración"
-                    android:layout_marginTop="12dp" />
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/brand_primary"
+                    android:textColor="@color/on_primary"
+                    android:text="Configuración"/>
 
                 <Button
                     android:id="@+id/btnVerDetalles"
-                    android:layout_width="match_parent"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Ver Detalles"
-                    android:layout_marginTop="12dp" />
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/brand_primary"
+                    android:textColor="@color/on_primary"
+                    android:text="Detalles"/>
 
                 <Button
                     android:id="@+id/btnAbrirAyuda"
-                    android:layout_width="match_parent"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Ayuda / FAQ"
-                    android:layout_marginTop="12dp" />
-
-
-            </LinearLayout>
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/brand_primary"
+                    android:textColor="@color/on_primary"
+                    android:text="Ayuda"/>
+            </GridLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
