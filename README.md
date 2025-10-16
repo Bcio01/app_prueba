@@ -12,27 +12,21 @@ Es la pantalla principal del proyecto, que da la bienvenida al usuario y agrupa 
 
 Incluye:
 - **Botones con Intents Explícitos**
-  - Ir al perfil (`PerfilActivity`)
   - Ver detalles (`DetallesActivity`)
   - Abrir configuración (`ConfiguracionActivity`)
   - Ayuda (`AyudaActivity`)
 - **Botones con Intents Implícitos**
   - Abrir sitio web (https://www.minecraft.net/)
   - Enviar mensaje SMS
-  - Compartir texto
   - Marcar un número telefónico
   - Seleccionar una imagen desde la galería
-- **Linterna ON/OFF**
-  - Utiliza `CameraManager` y `setTorchMode()` para encender o apagar el flash del dispositivo.
-  - Solicita permiso de cámara en tiempo de ejecución.
+  - Abrir Google Maps ejemplo: (Instituto)
 
 ##  Estructura de Código
 
 ### `HomeActivity.java`
 Maneja toda la lógica de los botones:
 - Crea los **Intents implícitos** con `Intent.ACTION_VIEW`, `Intent.ACTION_SEND`, etc.
-- Controla la linterna con permisos dinámicos (`Manifest.permission.CAMERA`).
-- Usa **ActivityResultLauncher** para manejar respuestas desde otras pantallas (por ejemplo, editar el perfil).
 
 ### `activity_home.xml`
 Diseño de la pantalla principal.
@@ -54,7 +48,6 @@ Diseño de la pantalla principal.
 - Se usan para abrir Activities propias dentro del proyecto (`new Intent(this, PerfilActivity.class)`).
 
 ### Permisos usados:
-- `android.permission.CAMERA` → Para controlar la linterna.
 - `android.permission.SEND_SMS` → (Solo si se implementa envío real de SMS).
 
 
