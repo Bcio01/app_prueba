@@ -11,12 +11,6 @@
         android:orientation="vertical" android:padding="16dp"
         android:layout_width="match_parent" android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btnTomarFoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tomar foto" />
-
         <ImageView
             android:id="@+id/imgPreview"
             android:layout_width="match_parent"
@@ -24,6 +18,12 @@
             android:layout_weight="1"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"/>
+        <Button
+            android:id="@+id/btnTomarFoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tomar foto" />
+
     </LinearLayout>
 
 

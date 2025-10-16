@@ -2,97 +2,85 @@
 package com.devst.app;
 
 // Importa las herramientas necesarias de Android para esta clase
-import android.Manifest; // Para pedir permisos (como la cámara)
-import android.content.Intent; // Para abrir otras pantallas o apps
-import android.content.pm.PackageManager; // Para comprobar permisos
-import android.hardware.camera2.CameraManager; // Para manejar la cámara del celular
-import android.hardware.camera2.CameraAccessException; // Para manejar errores de cámara
-import android.hardware.camera2.CameraCharacteristics; // Para saber datos de la cámara
-import android.net.Uri; // Para abrir direcciones web, teléfonos o archivos
-import android.os.Bundle; // Contiene los datos al crear la actividad
-import android.view.Menu; // Para mostrar menús arriba
-import android.view.MenuItem; // Cada opción del menú
-import android.widget.Button; // Botones
-import android.widget.TextView; // Textos en pantalla
-import android.widget.Toast; // Mensajes cortos que aparecen abajo
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCharacteristics;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 // Librerías modernas de Android (AndroidX)
-import androidx.activity.EdgeToEdge; // Para usar pantalla completa
-import androidx.activity.result.ActivityResultLauncher; // Para recibir resultados de otras pantallas
-import androidx.activity.result.contract.ActivityResultContracts; // Define el tipo de resultado esperado
-import androidx.annotation.NonNull; // Indica que un valor no puede ser nulo
-import androidx.appcompat.app.AppCompatActivity; // Clase base para pantallas modernas
-import androidx.appcompat.widget.Toolbar; // Barra superior de la app
-import androidx.core.content.ContextCompat; // Verifica permisos del sistema
-import androidx.core.graphics.Insets; // Para márgenes de la pantalla
-import androidx.core.view.ViewCompat; // Para vista completa
-import androidx.core.view.WindowInsetsCompat; // Ajustes de bordes y espacio en pantalla
+import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
-// Se declara la clase principal de esta pantalla (Activity)
+// Clase principal
 public class HomeActivity extends AppCompatActivity {
 
-    // Variable que guardará el email del usuario
     private String emailUsuario = "";
-
-    // Elemento de texto donde se mostrará el saludo o correo
     private TextView tvBienvenida;
+    private Button btnLinterna;
+    private CameraManager camara;
+    private String camaraID = null;
+    private boolean luz = false;
 
-    // Variables para controlar la linterna del teléfono
-    private Button btnLinterna; // El botón para encender o apagar la linterna
-    private CameraManager camara; // Objeto que maneja la cámara
-    private String camaraID = null; // Identificador de la cámara trasera
-    private boolean luz = false; // Guarda si la linterna está encendida o apagada
-
-    // Permite abrir otra pantalla y recibir un resultado al volver (por ejemplo, editar el perfil)
+    // Lanzador para editar perfil
     private final ActivityResultLauncher<Intent> editarPerfilLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-                // Si la otra pantalla terminó bien y devolvió datos
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    // Se obtiene el nombre editado
                     String nombre = result.getData().getStringExtra("nombre_editado");
-                    // Si no es nulo, se muestra el nuevo saludo
                     if (nombre != null) {
                         tvBienvenida.setText("Hola, " + nombre);
                     }
                 }
             });
 
-    // Sirve para pedir permiso de cámara mientras la app está abierta
+    // Lanzador para permiso de cámara (linterna)
     private final ActivityResultLauncher<String> permisoCamaraLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), granted -> {
-                // Si el usuario acepta el permiso
                 if (granted) {
-                    alternarluz(); // Enciende o apaga la linterna
+                    alternarluz();
                 } else {
-                    // Si el permiso fue denegado, muestra un mensaje
                     Toast.makeText(this, "Permiso de cámara denegado", Toast.LENGTH_SHORT).show();
                 }
             });
 
-    // Sirve para abrir la galería y seleccionar una imagen
+    // Lanzador para seleccionar imagen desde la galería
     private final ActivityResultLauncher<String> seleccionarImagenLauncher =
             registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
-                // Si el usuario seleccionó una imagen
                 if (uri != null) {
                     Toast.makeText(this, "Imagen seleccionada: " + uri.getLastPathSegment(), Toast.LENGTH_SHORT).show();
                 } else {
-                    // Si canceló la selección
                     Toast.makeText(this, "Selección cancelada", Toast.LENGTH_SHORT).show();
                 }
             });
 
-    // Método que se ejecuta al iniciar la pantalla
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState); // Llama al método original
-        EdgeToEdge.enable(this); // Habilita el modo pantalla completa
-        setContentView(R.layout.activity_home); // Conecta el diseño XML con el código
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_home);
 
-        // Encuentra la barra superior y la activa
+        // Botón: abrir ubicación en Google Maps (nuevo)
+        findViewById(R.id.btnAbrirMaps).setOnClickListener(v ->
+                abrirMapsUbicacion(-33.449291, -70.662279, "Instituto ST"));
+
+        // Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Busca los elementos del diseño (botones, textos) y los conecta con el código
+        // Elementos del layout
         tvBienvenida = findViewById(R.id.tvBienvenida);
         Button btnIrPerfil = findViewById(R.id.btnIrPerfil);
         Button btnAbrirWeb = findViewById(R.id.btnAbrirWeb);
@@ -106,36 +94,47 @@ public class HomeActivity extends AppCompatActivity {
         Button btnVerDetalles = findViewById(R.id.btnVerDetalles);
         Button btnAbrirAyuda = findViewById(R.id.btnAbrirAyuda);
 
-        // Obtiene el correo que se mandó desde el login
+        // Email recibido desde Login
         emailUsuario = getIntent().getStringExtra("email_usuario");
-        // Si no llega ningún correo, deja el texto vacío
         if (emailUsuario == null) emailUsuario = "";
-        // Muestra un mensaje de bienvenida con el correo
         tvBienvenida.setText("Bienvenido: " + emailUsuario);
 
-        // Botón: Ir al perfil (pantalla explícita)
+        // ===== Intents explícitos =====
         btnIrPerfil.setOnClickListener(v -> {
-            Intent i = new Intent(HomeActivity.this, PerfilActivity.class);
+            Intent i = new Intent(this, PerfilActivity.class);
             i.putExtra("email_usuario", emailUsuario);
-            editarPerfilLauncher.launch(i); // Lanza la actividad esperando un resultado
+            editarPerfilLauncher.launch(i);
         });
 
-        // Botón: Abrir sitio web (intent implícito)
+        btnAbrirConfiguracion.setOnClickListener(v ->
+                startActivity(new Intent(this, ConfiguracionActivity.class)));
+
+        btnVerDetalles.setOnClickListener(v -> {
+            Intent i = new Intent(this, DetallesActivity.class);
+            i.putExtra("titulo", "Detalle desde Home");
+            i.putExtra("id", 42);
+            startActivity(i);
+        });
+
+        btnAbrirAyuda.setOnClickListener(v ->
+                startActivity(new Intent(this, AyudaActivity.class)));
+
+        btnCamara.setOnClickListener(v ->
+                startActivity(new Intent(this, CamaraActivity.class)));
+
+        // ===== Intents implícitos =====
         btnAbrirWeb.setOnClickListener(v -> {
             Uri uri = Uri.parse("https://www.minecraft.net/");
-            Intent viewWeb = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(viewWeb);
+            startActivity(new Intent(Intent.ACTION_VIEW, uri));
         });
 
-        // Botón: Enviar SMS (reemplaza al correo)
         btnEnviarCorreo.setOnClickListener(v -> {
-            Uri uri = Uri.parse("smsto:"); // Abre la app de mensajes sin número
+            Uri uri = Uri.parse("smsto:");
             Intent sms = new Intent(Intent.ACTION_SENDTO, uri);
             sms.putExtra("sms_body", "Hola, mensaje desde mi app.");
             startActivity(sms);
         });
 
-        // Botón: Compartir texto (intent implícito)
         btnCompartir.setOnClickListener(v -> {
             Intent share = new Intent(Intent.ACTION_SEND);
             share.setType("text/plain");
@@ -143,10 +142,16 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(Intent.createChooser(share, "Compartir usando:"));
         });
 
-        // Inicializa el acceso a la cámara del teléfono
-        camara = (CameraManager) getSystemService(CAMERA_SERVICE);
+        btnMarcarTelefono.setOnClickListener(v -> {
+            Uri tel = Uri.parse("tel:+56912345678");
+            startActivity(new Intent(Intent.ACTION_DIAL, tel));
+        });
 
-        // Busca la cámara trasera con flash disponible
+        btnSeleccionarImagen.setOnClickListener(v ->
+                seleccionarImagenLauncher.launch("image/*"));
+
+        // ===== Linterna =====
+        camara = (CameraManager) getSystemService(CAMERA_SERVICE);
         try {
             for (String id : camara.getCameraIdList()) {
                 CameraCharacteristics cc = camara.getCameraCharacteristics(id);
@@ -155,7 +160,7 @@ public class HomeActivity extends AppCompatActivity {
                 if (Boolean.TRUE.equals(disponibleFlash)
                         && lensFacing != null
                         && lensFacing == CameraCharacteristics.LENS_FACING_BACK) {
-                    camaraID = id; // Guarda la cámara trasera con flash
+                    camaraID = id;
                     break;
                 }
             }
@@ -163,109 +168,82 @@ public class HomeActivity extends AppCompatActivity {
             Toast.makeText(this, "No se puede acceder a la cámara", Toast.LENGTH_SHORT).show();
         }
 
-        // Botón: Enciende o apaga la linterna
         btnLinterna.setOnClickListener(v -> {
             if (camaraID == null) {
                 Toast.makeText(this, "Este dispositivo no tiene flash disponible", Toast.LENGTH_SHORT).show();
                 return;
             }
-            // Verifica si tiene permiso de cámara
             boolean camGranted = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                     == PackageManager.PERMISSION_GRANTED;
 
-            // Si tiene permiso, cambia el estado de la linterna
             if (camGranted) {
                 alternarluz();
             } else {
-                // Si no tiene permiso, lo pide
                 permisoCamaraLauncher.launch(Manifest.permission.CAMERA);
             }
         });
-
-        // Botón: Abre la cámara del teléfono (otra pantalla)
-        btnCamara.setOnClickListener(v ->
-                startActivity(new Intent(this, CamaraActivity.class))
-        );
-
-        // Botón: Marcar teléfono (abre el marcador con un número)
-        btnMarcarTelefono.setOnClickListener(v -> {
-            Uri tel = Uri.parse("tel:+56912345678");
-            startActivity(new Intent(Intent.ACTION_DIAL, tel));
-        });
-
-        // Botón: Seleccionar una imagen de la galería
-        btnSeleccionarImagen.setOnClickListener(v ->
-                seleccionarImagenLauncher.launch("image/*")
-        );
-
-        // Botón: Abrir configuración
-        btnAbrirConfiguracion.setOnClickListener(v ->
-                startActivity(new Intent(this, ConfiguracionActivity.class)));
-
-        // Botón: Ver detalles (manda datos extras)
-        btnVerDetalles.setOnClickListener(v -> {
-            Intent i = new Intent(this, DetallesActivity.class);
-            i.putExtra("titulo", "Detalle desde Home");
-            i.putExtra("id", 42);
-            startActivity(i);
-        });
-
-        // Botón: Abrir ayuda
-        btnAbrirAyuda.setOnClickListener(v ->
-                startActivity(new Intent(this, AyudaActivity.class)));
     }
 
-    // Método que enciende o apaga la linterna
+    // Método para abrir Google Maps (Intent implícito)
+    private void abrirMapsUbicacion(double lat, double lng, String etiqueta) {
+        Uri uri = Uri.parse("geo:" + lat + "," + lng + "?q=" + lat + "," + lng + "(" + Uri.encode(etiqueta) + ")");
+        Intent i = new Intent(Intent.ACTION_VIEW, uri);
+        i.setPackage("com.google.android.apps.maps");
+
+        if (i.resolveActivity(getPackageManager()) != null) {
+            startActivity(i);
+        } else {
+            Uri web = Uri.parse("https://www.google.com/maps/search/?api=1&query=" + lat + "," + lng);
+            startActivity(new Intent(Intent.ACTION_VIEW, web));
+        }
+    }
+
+    // Enciende o apaga la linterna
     private void alternarluz() {
         try {
-            luz = !luz; // Cambia el estado de la linterna
-            camara.setTorchMode(camaraID, luz); // Activa o desactiva el flash
-            btnLinterna.setText(luz ? "Apagar Linterna" : "Encender Linterna"); // Cambia el texto del botón
+            luz = !luz;
+            camara.setTorchMode(camaraID, luz);
+            btnLinterna.setText(luz ? "Apagar Linterna" : "Encender Linterna");
         } catch (CameraAccessException e) {
             Toast.makeText(this, "Error al controlar la linterna", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // Cuando la app se pausa, apaga la linterna si estaba encendida
+    // Apaga la linterna si la app se pausa
     @Override
     protected void onPause() {
         super.onPause();
         if (camaraID != null && luz) {
             try {
-                camara.setTorchMode(camaraID, false); // Apaga el flash
-                luz = false; // Actualiza el estado
+                camara.setTorchMode(camaraID, false);
+                luz = false;
                 if (btnLinterna != null) btnLinterna.setText("Encender Linterna");
             } catch (CameraAccessException ignored) {}
         }
     }
 
-    // Crea el menú superior
+    // Menú superior
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu); // Muestra las opciones del menú
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
-    // Detecta qué opción del menú se selecciona
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_perfil) {
-            // Abre el perfil (intent explícito)
             Intent i = new Intent(this, PerfilActivity.class);
             i.putExtra("email_usuario", emailUsuario);
             editarPerfilLauncher.launch(i);
             return true;
         } else if (id == R.id.action_web) {
-            // Abre la página web (intent implícito)
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.minecraft.net/")));
             return true;
         } else if (id == R.id.action_salir) {
-            // Cierra la pantalla actual
             finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 }
-
