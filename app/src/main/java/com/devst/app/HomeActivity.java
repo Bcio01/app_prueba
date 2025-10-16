@@ -200,7 +200,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(this, AyudaActivity.class)));
     }
 
-    //Linterna
+    //Linterna encendida
     private void alternarluz() {
         try {
             luz = !luz;

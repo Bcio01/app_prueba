@@ -23,7 +23,7 @@
             app:titleCentered="true"/>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Contenido desplazable, con padding propio -->
+    <!-- Contenido desplazable, con padding propio :) -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
