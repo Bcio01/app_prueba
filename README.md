@@ -4,17 +4,6 @@ Proyecto Android desarrollado como parte de una evaluación práctica de program
 
 ---
 
-## 🎯 Objetivo del Proyecto
-
-Aplicar conceptos fundamentales de desarrollo Android:
-
-- ✅ Comunicación entre Activities con **intents explícitos**
-- ✅ Apertura de apps del sistema con **intents implícitos**
-- ✅ Diseño de pantallas con XML y componentes Material
-- ✅ Manejo de permisos en Android
-
----
-
 ## 🏠 HomeActivity — Pantalla Principal
 
 La `HomeActivity` funciona como **menú principal**. Desde esta pantalla se accede a todas las funcionalidades mediante botones organizados en dos categorías:
@@ -149,3 +138,37 @@ Este proyecto es de uso educativo.
 - AndroidX
 - Gradle
 
+---
+
+# 📱 Vistas en GIF
+
+### 🔐 Login
+![Login](gif%20app/Login.gif)
+
+---
+
+### ⚙️ Configuración
+![Configuracion](gif%20app/Configuracion.gif)
+
+### 📄 Detalles
+![Detalles](gif%20app/Detalles.gif)
+
+### ❓ Ayuda
+![Ayuda](gif%20app/Ayuda.gif)
+
+---
+
+### 🌍 Redirección a Sitio Web
+![Sitio Web](gif%20app/SitioWeb.gif)
+
+### ✉️ Enviar Mensaje
+![Enviar Correo](gif%20app/Correo.gif)
+
+### 🤝 Compartir Mensaje
+![Compartir Texto](gif%20app/Compartir.gif)
+
+### ☎️ Redirección a Teléfono
+![Llamar Teléfono](gif%20app/Telefono.gif)
+
+### 🗺️ Redirección a Google Maps
+![Google Maps](gif%20app/Maps.gif)
