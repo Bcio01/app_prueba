@@ -1,69 +1,69 @@
 package com.devst.app;
 
+// Importa librerías necesarias
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import android.os.Bundle;
-import android.widget.Switch;
-import android.widget.Button;
-import android.widget.Toast;
-import android.content.SharedPreferences;
 
+import android.content.Intent;
+import android.os.Bundle; // Control del ciclo de vida
+import android.widget.Button; // Botón para guardar configuración
+import android.widget.Switch; // Interruptores (On/Off)
+import android.widget.Toast; // Mensajes emergentes
+
+// Clase principal de la pantalla de configuración
 public class ConfiguracionActivity extends AppCompatActivity {
 
-    private Switch swNotificaciones, swTemaOscuro;
-    private Button btnGuardar;
+    // Declaración de variables para los elementos de la interfaz
+    private Switch swNotificaciones; // Permite activar o desactivar notificaciones
+    private Switch swTemaOscuro; // Permite activar o desactivar modo oscuro
+    private Button btnGuardar; // Botón para guardar los cambios
+
+    private Button btnVolverHome; // Botón para volver al menú principal
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_configuracion);
+        setContentView(R.layout.activity_configuracion); // Conecta el diseño XML
 
-        // Evita error si el tema no tiene ActionBar
+        // Habilita botón de volver en la ActionBar (si está disponible)
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            setTitle("Configuración");
+            setTitle("Configuración"); // Título en la parte superior
         }
 
-        // Referencias
+        // Referencias a los elementos del XML
         swNotificaciones = findViewById(R.id.swNotificaciones);
         swTemaOscuro = findViewById(R.id.swTemaOscuro);
         btnGuardar = findViewById(R.id.btnGuardarConfig);
+        btnVolverHome = findViewById(R.id.btnVolverHome);
 
-        // Cargar configuración guardada
-        SharedPreferences prefs = getSharedPreferences("config", MODE_PRIVATE);
-        boolean darkMode = prefs.getBoolean("darkMode", false);
-        swTemaOscuro.setChecked(darkMode);
-
-        // Aplicar modo oscuro actual
-        if (darkMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-
-        // Escuchar cambios en el switch
-        swTemaOscuro.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
-            // Guardar preferencia
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("darkMode", isChecked);
-            editor.apply();
-        });
-
-        // Evento del botón Guardar
+        // Evento del botón "Guardar"
         btnGuardar.setOnClickListener(v -> {
-            Toast.makeText(this, "Configuración guardada", Toast.LENGTH_SHORT).show();
-            finish();
+            // Captura el estado actual de los switches
+            boolean notificaciones = swNotificaciones.isChecked();
+            boolean temaOscuro = swTemaOscuro.isChecked();
+
+            // Muestra un mensaje indicando que se guardó la configuración
+            Toast.makeText(this,
+                    "Configuración guardada:\nNotificaciones: " +
+                            (notificaciones ? "activadas" : "desactivadas") +
+                            "\nTema oscuro: " + (temaOscuro ? "sí" : "no"),
+                    Toast.LENGTH_LONG).show();
+
+            // Aquí podrías guardar los valores en SharedPreferences si lo deseas
+        });
+        // Acción del botón: volver al menú principal
+        btnVolverHome.setOnClickListener(v -> {
+            // Crea un Intent para volver a HomeActivity
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent); // Abre HomeActivity
+            finish(); // Cierra esta pantalla para no acumular en la pila
         });
     }
 
+    // Permite volver atrás al presionar la flecha de la ActionBar
     @Override
     public boolean onSupportNavigateUp() {
-        onBackPressed();
+        finish(); // Cierra la actividad actual
         return true;
     }
 }

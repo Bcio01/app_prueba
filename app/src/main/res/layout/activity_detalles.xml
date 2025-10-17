@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Archivo de diseño para DetallesActivity.
+    Muestra el título, ID, descripción y un botón para volver.
+-->
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -26,8 +31,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+        <!-- Muestra el nombre principal del ítem. -->
 
-        <!-- ID del detalle -->
+        <!-- ID -->
         <TextView
             android:id="@+id/tvIdDetalle"
             android:layout_width="0dp"
@@ -40,6 +46,7 @@
             app:layout_constraintTop_toBottomOf="@id/tvTituloDetalle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+        <!-- Muestra el identificador único del ítem. -->
 
         <!-- Descripción -->
         <TextView
@@ -55,23 +62,24 @@
             app:layout_constraintTop_toBottomOf="@id/tvIdDetalle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+        <!-- Texto descriptivo o informativo sobre el ítem. -->
 
         <!-- Botón volver -->
         <Button
             android:id="@+id/btnVolver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Volver"
-            android:textColor="@color/on_primary"
-            android:backgroundTint="@color/brand_primary"
             android:layout_marginTop="32dp"
+            android:backgroundTint="@color/brand_primary"
             android:paddingHorizontal="32dp"
             android:paddingVertical="10dp"
+            android:text="Volver al inicio"
+            android:textColor="@color/on_primary"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/tvDescripcionDetalle"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDescripcionDetalle" />
+        <!-- Regresa a la pantalla anterior (HomeActivity). -->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

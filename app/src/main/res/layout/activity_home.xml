@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Este archivo define el diseño principal de la pantalla HomeActivity.
+    Usa un CoordinatorLayout como contenedor raíz y Material Design para la barra superior.
+    Los botones están organizados en una cuadrícula (GridLayout) con estilo moderno.
+-->
+
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,11 +14,19 @@
     android:background="@color/app_bg"
     tools:context=".HomeActivity">
 
-    <!-- Barra superior -->
+    <!-- ===================================================== -->
+    <!--                BARRA SUPERIOR (TOOLBAR)               -->
+    <!-- ===================================================== -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="0dp">
+
+        <!--
+            AppBarLayout contiene la barra superior.
+            Sirve para colocar una Toolbar o un título.
+            La propiedad "elevation" define la sombra bajo la barra (0dp = sin sombra).
+        -->
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -22,14 +36,26 @@
             android:title="Inicio"
             android:titleTextColor="@color/on_primary"
             app:titleCentered="true"/>
+        <!--
+            MaterialToolbar es la barra superior moderna de Material Design.
+            Muestra el título centrado "Inicio" con color blanco y fondo personalizado.
+        -->
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Contenido principal -->
+    <!-- ===================================================== -->
+    <!--             CONTENIDO PRINCIPAL SCROLLABLE            -->
+    <!-- ===================================================== -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:padding="24dp">
+
+        <!--
+            NestedScrollView permite desplazamiento del contenido (scroll).
+            Ideal cuando hay muchos botones o textos.
+            El padding (24dp) da espacio alrededor de todo el contenido.
+        -->
 
         <LinearLayout
             android:id="@+id/content"
@@ -38,7 +64,14 @@
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
-            <!-- Texto de bienvenida -->
+            <!--
+                LinearLayout organiza los elementos en una sola columna vertical.
+                Los elementos dentro estarán centrados horizontalmente.
+            -->
+
+            <!-- ===================================================== -->
+            <!--                  TEXTO DE BIENVENIDA                 -->
+            <!-- ===================================================== -->
             <TextView
                 android:id="@+id/tvBienvenida"
                 android:layout_width="wrap_content"
@@ -48,8 +81,15 @@
                 android:textStyle="bold"
                 android:textColor="@color/text_main"
                 android:layout_marginBottom="24dp"/>
+            <!--
+                Muestra el saludo principal al usuario.
+                El tamaño 22sp lo hace más grande y legible.
+                El margen inferior separa el texto de los botones.
+            -->
 
-            <!-- Contenedor de botones -->
+            <!-- ===================================================== -->
+            <!--                   SECCIÓN DE BOTONES                 -->
+            <!-- ===================================================== -->
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -58,7 +98,13 @@
                 android:useDefaultMargins="true"
                 android:columnOrderPreserved="false">
 
-                <!-- Todos los botones con mismo estilo -->
+                <!--
+                    GridLayout permite organizar botones en varias columnas.
+                    columnCount="2" crea dos columnas.
+                    useDefaultMargins agrega espacio automático entre botones.
+                -->
+
+                <!-- Botón: Ir al perfil -->
                 <Button
                     android:id="@+id/btnIrPerfil"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -68,7 +114,12 @@
                     android:backgroundTint="@color/brand_primary"
                     android:textColor="@color/on_primary"
                     android:text="Perfil"/>
+                <!--
+                    Abre la pantalla PerfilActivity.
+                    Usa el estilo MaterialComponents con fondo del color principal.
+                -->
 
+                <!-- Botón: Abrir sitio web -->
                 <Button
                     android:id="@+id/btnAbrirWeb"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -78,7 +129,11 @@
                     android:backgroundTint="@color/brand_primary"
                     android:textColor="@color/on_primary"
                     android:text="Sitio web"/>
+                <!--
+                    Abre una página web (Minecraft o cualquier URL definida).
+                -->
 
+                <!-- Botón: Enviar correo o SMS -->
                 <Button
                     android:id="@+id/btnEnviarCorreo"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -88,7 +143,11 @@
                     android:backgroundTint="@color/brand_primary"
                     android:textColor="@color/on_primary"
                     android:text="Correo"/>
+                <!--
+                    Abre la app de mensajes para enviar un SMS.
+                -->
 
+                <!-- Botón: Compartir texto -->
                 <Button
                     android:id="@+id/btnCompartir"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -98,7 +157,11 @@
                     android:backgroundTint="@color/brand_primary"
                     android:textColor="@color/on_primary"
                     android:text="Compartir"/>
+                <!--
+                    Comparte texto usando otras apps como WhatsApp o Gmail.
+                -->
 
+                <!-- Botón: Linterna -->
                 <Button
                     android:id="@+id/btnLinterna"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -108,7 +171,12 @@
                     android:backgroundTint="@color/brand_primary"
                     android:textColor="@color/on_primary"
                     android:text="Linterna"/>
+                <!--
+                    Enciende o apaga la linterna del teléfono.
+                    Usa permisos de cámara para funcionar correctamente.
+                -->
 
+                <!-- Botón: Abrir cámara -->
                 <Button
                     android:id="@+id/btnCamara"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -118,7 +186,11 @@
                     android:backgroundTint="@color/brand_primary"
                     android:textColor="@color/on_primary"
                     android:text="Cámara"/>
+                <!--
+                    Abre la pantalla de cámara (CamaraActivity) para tomar fotos o grabar.
+                -->
 
+                <!-- Botón: Marcar teléfono -->
                 <Button
                     android:id="@+id/btnMarcarTelefono"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -128,7 +200,11 @@
                     android:backgroundTint="@color/brand_primary"
                     android:textColor="@color/on_primary"
                     android:text="Teléfono"/>
+                <!--
+                    Abre el marcador del teléfono con un número ya preparado.
+                -->
 
+                <!-- Botón: Seleccionar imagen de galería -->
                 <Button
                     android:id="@+id/btnSeleccionarImagen"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -138,7 +214,11 @@
                     android:backgroundTint="@color/brand_primary"
                     android:textColor="@color/on_primary"
                     android:text="Galería"/>
+                <!--
+                    Abre la galería del dispositivo para seleccionar una imagen.
+                -->
 
+                <!-- Botón: Abrir ubicación en Google Maps -->
                 <Button
                     android:id="@+id/btnAbrirMaps"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -148,7 +228,12 @@
                     android:backgroundTint="@color/brand_primary"
                     android:textColor="@color/on_primary"
                     android:text="Maps"/>
+                <!--
+                    Abre Google Maps mostrando una ubicación específica.
+                    Si no hay app de mapas, abre el navegador con la URL.
+                -->
 
+                <!-- Botón: Configuración -->
                 <Button
                     android:id="@+id/btnAbrirConfiguracion"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -158,7 +243,12 @@
                     android:backgroundTint="@color/brand_primary"
                     android:textColor="@color/on_primary"
                     android:text="Configuración"/>
+                <!--
+                    Abre la pantalla ConfiguracionActivity.
+                    Permite cambiar temas o preferencias del usuario.
+                -->
 
+                <!-- Botón: Ver detalles -->
                 <Button
                     android:id="@+id/btnVerDetalles"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -168,7 +258,11 @@
                     android:backgroundTint="@color/brand_primary"
                     android:textColor="@color/on_primary"
                     android:text="Detalles"/>
+                <!--
+                    Abre DetallesActivity y envía datos de ejemplo (id, título, etc.).
+                -->
 
+                <!-- Botón: Ayuda -->
                 <Button
                     android:id="@+id/btnAbrirAyuda"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -178,7 +272,16 @@
                     android:backgroundTint="@color/brand_primary"
                     android:textColor="@color/on_primary"
                     android:text="Ayuda"/>
+                <!--
+                    Abre AyudaActivity, que explica cómo usar la aplicación.
+                    Puede contener preguntas frecuentes o tutoriales.
+                -->
             </GridLayout>
+            <!-- Fin de la cuadrícula de botones -->
         </LinearLayout>
+        <!-- Fin del contenedor vertical -->
     </androidx.core.widget.NestedScrollView>
+    <!-- Fin del contenido desplazable -->
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <!-- Fin del diseño principal de la pantalla Home -->

@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Archivo de diseño para la pantalla de ayuda (AyudaActivity).
+    Muestra información útil y preguntas frecuentes al usuario.
+    Incluye scroll para poder visualizar todo el contenido.
+-->
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,12 +14,17 @@
     android:background="@color/app_bg"
     tools:context=".AyudaActivity">
 
+    <!--
+        ScrollView permite desplazar el contenido completo verticalmente.
+        fillViewport="true" asegura que ocupe toda la pantalla incluso si el contenido es corto.
+    -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="24dp">
 
-        <!-- Título -->
+        <!-- Título principal -->
         <TextView
             android:id="@+id/tvTituloAyuda"
             android:layout_width="0dp"
@@ -26,8 +37,12 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+        <!--
+            Muestra el título centrado en la parte superior.
+            Usa el color de marca definido en colors.xml.
+        -->
 
-        <!-- Contenido de ayuda -->
+        <!-- Contenido principal de ayuda -->
         <LinearLayout
             android:id="@+id/contenidoAyuda"
             android:layout_width="0dp"
@@ -38,7 +53,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <!-- Sección inicio de sesión -->
+            <!--
+                LinearLayout organiza los textos de ayuda en forma vertical.
+                Cada bloque representa una sección explicativa.
+            -->
+
+            <!-- Sección: inicio de sesión -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,16 +67,15 @@
                 android:textSize="18sp"
                 android:textColor="@color/text_main"
                 android:layout_marginBottom="6dp"/>
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Para ingresar, escribe tu correo y contraseña válidos y presiona **Iniciar sesión**. Si los datos son correctos, entrarás al menú principal."
+                android:text="Para ingresar, escribe tu correo y contraseña válidos y presiona Iniciar sesión. Si los datos son correctos, entrarás al menú principal."
                 android:textColor="@color/text_dim"
                 android:layout_marginBottom="16dp"
                 android:lineSpacingExtra="4dp"/>
 
-            <!-- Sección configuración -->
+            <!-- Sección: configuración -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,16 +84,15 @@
                 android:textSize="18sp"
                 android:textColor="@color/text_main"
                 android:layout_marginBottom="6dp"/>
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="En **Configuración**, puedes activar o desactivar las notificaciones y cambiar entre el modo **oscuro o claro**. Los cambios se guardan automáticamente."
+                android:text="En Configuración, puedes activar o desactivar las notificaciones y cambiar entre el modo oscuro o claro. Los cambios se guardan."
                 android:textColor="@color/text_dim"
                 android:layout_marginBottom="16dp"
                 android:lineSpacingExtra="4dp"/>
 
-            <!-- Sección compartir -->
+            <!-- Sección: compartir -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,16 +101,15 @@
                 android:textSize="18sp"
                 android:textColor="@color/text_main"
                 android:layout_marginBottom="6dp"/>
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Usa los botones del menú principal para **compartir texto**, **enviar correos** o **abrir enlaces** fácilmente. Estas acciones utilizan las apps predeterminadas de tu dispositivo."
+                android:text="Usa los botones del menú principal para compartir texto, enviar correos o abrir enlaces fácilmente. Estas acciones utilizan las apps predeterminadas de tu dispositivo."
                 android:textColor="@color/text_dim"
                 android:layout_marginBottom="16dp"
                 android:lineSpacingExtra="4dp"/>
 
-            <!-- Sección mapas -->
+            <!-- Sección: mapas -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -101,35 +118,16 @@
                 android:textSize="18sp"
                 android:textColor="@color/text_main"
                 android:layout_marginBottom="6dp"/>
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Desde el menú principal también puedes abrir una ubicación en **Google Maps** o marcar un número de teléfono con un solo toque."
+                android:text="Desde el menú principal también puedes abrir una ubicación en Google Maps o marcar un número de teléfono con un solo toque."
                 android:textColor="@color/text_dim"
                 android:layout_marginBottom="24dp"
                 android:lineSpacingExtra="4dp"/>
-
-            <!-- Sección final -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="ℹ️ Consejos"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@color/text_main"
-                android:layout_marginBottom="6dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="• Guarda los cambios en configuración antes de salir.\n• Asegúrate de permitir los permisos de cámara y almacenamiento.\n• Si algo no responde, cierra y vuelve a abrir la aplicación.\n• Puedes cambiar entre orientación vertical y horizontal libremente."
-                android:textColor="@color/text_dim"
-                android:lineSpacingExtra="4dp"
-                android:layout_marginBottom="16dp" />
         </LinearLayout>
 
-        <!-- Botón volver al inicio -->
+        <!-- Botón volver -->
         <Button
             android:id="@+id/btnVolverHome"
             android:layout_width="wrap_content"
@@ -145,5 +143,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+        <!--
+            Este botón regresa al menú principal (HomeActivity).
+        -->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
